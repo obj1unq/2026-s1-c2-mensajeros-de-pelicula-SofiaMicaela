@@ -81,6 +81,4 @@ object camion {
 	method acoplados(_acoplados){
 		acoplados = _acoplados
 	}
-
 }
-
