@@ -1,0 +1,68 @@
+import mensajeros.*
+
+describe "Test mensajeros"{
+    test "Paquete inicia no pagado"{
+        assert.equals(false, paquete.estaPago())
+    }
+    test "Paquete pagado"{
+        paquete.pagarPaquete()
+        assert.equals(true, paquete.estaPago())
+    }
+    test "camion sin acoplados pesa media tonelada"{
+        assert.equals(500,camion.peso())
+    }
+    test "camion con 2 acoplados pesa una tonelada y media"{
+        camion.acoplados(2)
+        assert.equals(1500, camion.peso())
+    }
+    test "paquete no pagado no puede ser entregado"{
+        assert.notThat(jean.puedeEntregar(paquete, brooklyn))
+    }
+    test "paquete pagado puede ser entregado"{
+        paquete.pagarPaquete()
+
+        assert.that(jean.puedeEntregar(paquete,brooklyn))
+    }
+    test "jean puede entregar en matriz"{
+        paquete.pagarPaquete()
+
+        assert.that(jean.puedeEntregar(paquete, matrix))
+    }
+    test "neo puede entregar en brooklyn"{
+        paquete.pagarPaquete()
+        
+        assert.that(neo.puedeEntregar(paquete, brooklyn))
+    }
+    test "neo no puede entregar en matrix porque no tiene credito"{
+        paquete.pagarPaquete()
+
+        assert.notThat(neo.puedeEntregar(paquete, matrix))
+    }
+    test "neo con credito puede entregar a matrix"{
+        paquete.pagarPaquete()
+        neo.cargarCredito()
+
+        assert.that(neo.puedeEntregar(paquete, matrix))
+    }
+    test "sara no puede entregar en matrix"{
+        paquete.pagarPaquete()
+
+        assert.notThat(sara.puedeEntregar(paquete, matrix))
+    }
+    test "sara puede entregar en moto a brooklyn"{
+        paquete.pagarPaquete()
+        sara.pesoPropio(70)
+        sara.vehiculo(moto)
+
+        assert.that(sara.puedeEntregar(paquete, brooklyn))
+    }
+    test "sara no puede entregar a brooklyn en camion con 1 acoplado"{
+        camion.acoplados(1)
+        paquete.pagarPaquete()
+        sara.pesoPropio(1)
+        sara.vehiculo(camion)
+
+        assert.notThat(sara.puedeEntregar(paquete,brooklyn))
+        
+    }
+}
